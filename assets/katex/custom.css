@@ -1,0 +1,11 @@
+/* To break / wrap block equations / formulas if too wide, like for phone
+see https://github.com/KaTeX/KaTeX/issues/327#issuecomment-486885241 */
+
+.katex > .katex-html {
+	white-space: normal;
+}
+
+.katex .base {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
