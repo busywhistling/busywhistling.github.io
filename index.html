@@ -1,0 +1,110 @@
+<!doctype html><html><head><meta name=generator content="Hugo 0.103.1"><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><title>Paramjit Singh</title><link rel=icon type=image/png href=icons/myicon.png><meta name=viewport content="width=device-width,initial-scale=1"><link rel=alternate type=application/rss+xml href=https://paramjit.org/index.xml title="Paramjit Singh"><meta property="og:title" content="Paramjit Singh"><meta property="og:description" content><meta property="og:type" content="website"><meta property="og:url" content="https://paramjit.org/"><meta name=twitter:card content="summary"><meta name=twitter:title content="Paramjit Singh"><meta name=twitter:description content><link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel=stylesheet><link rel=stylesheet href=https://paramjit.org/main.5e90e5660f025d1bf0df22595a387d533a3e1b8ddd9f4b8a8cc5f4fcd4e4c9fc.css integrity="sha256-XpDlZg8CXRvw3yJZWjh9Uzo+G43dn0uKjMX0/NTkyfw="><link rel=stylesheet type=text/css media=screen href=https://paramjit.org/css/main.css><link rel=stylesheet type=text/css href=https://paramjit.org/css/custom.css><link rel=stylesheet type=text/css href=https://paramjit.org/css/dark.css media="(prefers-color-scheme: dark)"><link rel=stylesheet type=text/css href=https://paramjit.org/css/custom-dark.css media="(prefers-color-scheme: dark)"><script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<script src=https://paramjit.org/js/main.js></script>
+<script src=https://paramjit.org/js/abc.js></script>
+<script src=https://paramjit.org/js/xyz.js></script>
+<script src=https://code.jquery.com/jquery-3.4.1.js></script>
+<script defer data-domain=paramjit.org src=https://plausible.paramjit.org/js/pls.js></script></head><body><base href=https://paramjit.org/><header><div class=site-title><h1><a href=https://paramjit.org/>Paramjit Singh</a></h1><nav class="nav social"><ul class=flat><a href=https://github.com/busywhistling title=GitHub><i data-feather=github></i></a><a href=https://twitter.com/busywhistling title=Twitter><i data-feather=twitter></i></a><a href=https://www.linkedin.com/in/paramjit-org/ title=LinkedIn><i data-feather=linkedin></i></a><a href=mailto:contact@paramjit.org title=Email><i data-feather=mail></i></a><a href=/index.xml title=RSS><i data-feather=rss></i></a></ul></nav></div><nav class=nav><ul class=flat><li><a href=/>Blog</a></li><li><a href=/code>Code</a></li><li><a href=/blog>Archive</a></li><li><a href=/about>About</a></li></ul></nav></header><section><main><article><div class=meta>Sep 17, 2022</div><h1><a href=/blog/22-09-17-implementing-a-chess-transcriber-in-react/>Implementing a chess transcriber in React</a></h1><p>React is today one of the most popular frameworks for coding UI layers of modern
+web apps. By the moniker “modern”, I mean an era where best practices have
+matured for the vast majority of use cases & some level of declarative
+programming has been achieved (<em>you code what should happen, instead of how to
+do it</em>).</p><p>I think there are two fundamental aspects of React’s popularity (especially
+compared to the frameworks / libraries used before it):</p><ul><li><p><strong>Component architecture.</strong> Stemming from the CS notion of separation of
+concerns, React simplifies building complex apps by encouraging modularity
+(plug-&-play), reusability (DRY) and clear abstraction. This aspect has been
+kept in mind in the former frameworks as well, and React continues to implement
+it (much to the benefit of engineers for whom React is their first framework).
+Note the emphasis of React’s separating concerns despite coupling HTML/CSS and
+JS.</p></li><li><p><strong>Reactive programming.</strong> This is a declarative paradigm to create systems
+where asynchronous functions automatically handle updates to static content,
+without the programmer having to explicitly implement the updates. Over the last
+decade, this has transformed the engineering world with the rise of the internet
+(aka <em>asynchronous land</em>). Event loops/queues & efficient updating of
+declarative code has been extensively used to design <a href=https://www.reactivemanifesto.org/>reactive
+systems</a> and React is a library bringing
+similar patterns to web UIs. Like in much of engineering, while <em>imagining</em> a
+system where only the updated UI pieces (only things to be done) are re-rendered
+(get done) is easy, implementing it in reality is hard (browser DOM operations
+are expensive & not designed for it). React tackles this by using a
+reconciliation algorithm on a virtual DOM (a JS object representing the DOM
+tree) to handle this <em>reactively</em>.</p></li></ul><h1 id=chess-transcriber><strong>Chess transcriber</strong></h1><p>Here I want to talk about how I implemented a <a href=https://paramjit.org/chess_simulator/>chess
+transcriber</a> using React
+(<a href=https://github.com/busywhistling/chess_simulator>source</a>).</p><ul><li><p>Designing component architecture. The UI has a decent level of complex logic
+to it. At first, I divided the app in a Left Sidebar, main Chessboard and the
+Right Sidebar. The Left Sidebar should state instructions on how to use the app
+& let you choose functionality, the Right Sidebar should give
+functionality-specific instructions. And the main Chessboard is where all action
+should happen.</p></li><li><p>Implementing the Chessboard took some thought and really capitalizes on the
+abstraction model of React. The entire Board (enclosed in a wooden box) has 64
+Tiles, where each Tile’s props characterize it’s color, an onClick event
+listener, the piece on it & options to highlight it. I used
+the <a href=https://www.npmjs.com/package/chess.js>chess.js</a> library to handle the
+underlying chess logic (the library has been coded over 10 years and provides an
+excellent API), and designed the UI dataflow keeping the library’s interface in
+mind.</p></li><li><p>Handling the application state. At first, I tried passing props around to
+handle the UI updates, but it quickly became too complex to deal with. Not that
+it couldn’t be done, but the resulting design was ugly (not well abstracted,
+lots of re-implementation of code & lots of passing data to places where it
+doesn’t <em>exactly</em> need to be). I researched a bit, and indeed there are central
+state store implementations (often with the Flux architecture), which people
+like to use for complex component trees. I chose Redux to store where the pieces
+exist on the board & which are the highlighted tiles for a move, etc., and made
+the app work.</p></li></ul><p><img src=https://miro.medium.com/max/700/1*z4zTg1NIUHNFEtPLnOuD-w.png alt=https://miro.medium.com/max/700/1*z4zTg1NIUHNFEtPLnOuD-w.png></p><p>My chess transcriber web app</p><h1 id=a-second-look--re-architecture><strong>A second look & re-architecture</strong></h1><p>The more I learnt to think in React (and since I wanted to improve the app), I
+thought through exactly which component needed which data flow and how to
+arrange them in a well-organized <em>dataflow-lean</em> way. I decided to re-architect
+the app making the following changes.</p><ul><li><p>Component architecture. At first, I had divided the components focusing on UI,
+but that seems like a mistake. I have now divided the <em>components based on
+functionality.</em> The UI is an <em>implementation / representation</em> of the
+underlying <em>UI logic</em> — the main app (in JS) which says what is happening. This
+app (like any application code solving business logic) is divided
+into <em>functions</em> (i.e., by <em>functionality</em>). It often happens that this
+translates to separate UI components, but it’s important to note that the
+underlying driver of this abstraction is functionality, not UI. (For example,
+you can have a UI mixing up all outputs of various components in a well-written
+React app).</p></li><li><p>State management. I realized that my app (much like a lot of apps out there)
+don’t really need to use Redux or even React’s Context API. This came <a href=https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367>in
+time</a> when
+I realized that using Redux really makes sense when <em>you want the actions (state
+changes) themselves</em> (whether for bug reports, persistent storage or syncing UI
+across network). That is, in a way, Redux helps to decouple the actions from the
+components themselves. Even deep component trees which on first glance seem like
+they would benefit from a central store (via Flux or Context) can often be
+rearranged in a way that encourage component composition with
+appropriate <em>local</em> state initialization / usage.</p></li></ul><p>This app has been pretty useful to appreciate the underlying design choices of
+React and to understand when exactly to use (or not) Store libraries. Clean code
+comes from clean architecture, which requires having a clear idea of
+what <em>exactly</em> various tools offer, and when they make sense to use. Try out <a href=https://paramjit.org/chess_simulator/>the
+app</a>, and let me know your thoughts!</p><small>This article was cross-posted to <a href=https://medium.com/@busywhistling/implementing-a-chess-transcriber-in-react-937f1cc8ba75>Medium</a> & <a href=https://dev.to/busywhistling/implementing-a-chess-transcriber-in-react-2ahi>Dev.to</a>, so you can also follow there
+or post comments.</small></article><article><div class=meta>Sep 5, 2022</div><h1><a href=/blog/22-09-05-your-users-are-not-your-sole-audience/>Your users are not your sole audience</a></h1><p>One of the first things beginners in software engineering learn is to dote on
+their source code. As if getting up to speed with the latest tech stacks &
+platforms was not challenging enough, the industry (not without reason) places
+great emphasis on <em>how you code</em>. One hears about phrases like <em>human centric
+design</em> & <em>testability,</em> and wonders what the problem is if one&rsquo;s software <em>just
+works</em>.</p><blockquote><p>Why can&rsquo;t the thing just work?</p></blockquote><p>One needs to undergo a <em>mindset shift</em> to realize that code must be written not
+only to make the end product work, but also to be readable to other developers.
+That is, of course, if one does not wish to solo their way through the entire
+project lifecycle (not a great idea for anything long term).</p><p>So the idea to internalize is that your <em>source code</em> is also a product. That&rsquo;s
+the product you use to demonstrate your skills (<em>sell</em>) to your future
+employers/collaborators, with whom you then collectively sell your <em>software</em> to
+users. Once you have this mental model set up, it&rsquo;s much easier to make sense of
+software engineering <em>culture</em> and **understand where the vast amount of
+literature (blog posts, video, podcasts, etc) comes from.</p><h2 id=social-trumps-all><em>Social</em> trumps all</h2><p>Human beings tend to get social about the things they do, no matter how
+technical or mathematical they are. That&rsquo;s called <a href=https://en.wikipedia.org/wiki/Conway%27s_law>Conway&rsquo;s
+law</a> or something. Namely that
+organizations design systems that mirror their own communication structure. What
+happens if you apply this law to an industry? See what I mean?</p><p>People generally also care more about the social aspect of their work than just
+technical correctness, or even mastery. That&rsquo;s why opinions, conventions and
+standards start to matter. Developers have tastes and it&rsquo;s easier to work
+together when those tastes are in tune. That&rsquo;s one reason (among others) why you
+hear <em>empathy</em> talked about so much in developer circles.</p><h2 id=organizational-thinking>Organizational thinking</h2><p>There&rsquo;s another important aspect. Any large influential project or organization
+must necessarily involve many people. While it may naively seem that multiplying
+effort multiplies output, it takes great foresight & management skills to make
+<em>one plus one greater than two.</em></p><h2 id=behaving-oneself>Behaving oneself</h2><p>Most of the non-programming skills engineers need to master are just that.
+Project management skills in the context of software. While much of this is
+commonly learnt like gospel, in a “this is how you do it” sort of way, there&rsquo;s
+value in sticking to the basics and realizing that professional engineering is a
+social process, and there are notions of manners. While many of these manners
+aim to improve productivity / simplify architecture, some of them have
+idiosyncratic origins. And that&rsquo;s ok. Just important to distinguish them from
+the technical skills, to understand the motivations behind workflow choices.</p><small>This article was cross-posted to <a href=https://medium.com/@busywhistling/your-users-are-not-your-sole-audience-b4248dbe44f4>Medium</a> & <a href=https://dev.to/busywhistling/your-users-are-not-your-sole-audience-3hm0>Dev.to</a>, so you can also follow there
+or post comments.</small></article></main><aside><img src=/assets/paramjit-portrait.webp alt="Paramjit&amp;rsquo;s portrait in front of a Ferris Wheel"><nav class="nav social"><ul class=flat><a href=https://github.com/busywhistling title=GitHub><i data-feather=github></i></a><a href=https://twitter.com/busywhistling title=Twitter><i data-feather=twitter></i></a><a href=https://www.linkedin.com/in/paramjit-org/ title=LinkedIn><i data-feather=linkedin></i></a><a href=mailto:contact@paramjit.org title=Email><i data-feather=mail></i></a><a href=/index.xml title=RSS><i data-feather=rss></i></a></ul></nav><p>I am a software engineer in Berlin, interested in creating intelligent
+software which delivers delightful experiences to users. Read more about <a href=/about>me</a> or my <a href=/code>dev services</a>.</p></aside></section><div class="footer wrapper"><nav class=nav><div>Modified <a href=https://github.com/vividvilla/ezhil>Ezhil theme</a> | Built with <a href=https://gohugo.io>Hugo</a></div></nav></div><script>feather.replace()</script></body></html>

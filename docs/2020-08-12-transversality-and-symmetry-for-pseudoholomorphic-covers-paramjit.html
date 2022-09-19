@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="/src/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transversality and symmetry for pseudoholomorphic covers</title>
+    <link rel="stylesheet" href="/assets/katex/katex.min.css" />
+    <link rel="stylesheet" href="/assets/katex/custom.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script defer="" data-domain="paramjit.org" src="https://plausible.paramjit.org/js/pls.js"></script>
+  </head>
+  <body>
+    <main class="talkpage">
+      <header>
+        <h1>
+          Transversality and symmetry for pseudoholomorphic covers
+        </h1>
+      </header>
+      <article>
+        <div>
+          <h2>Overview</h2>
+          <div>
+            <p>
+              <a href="https://www.cmi.ac.in">Chennai Mathematical Institute</a
+              >, <b>August 12 2020</b>.
+              <a href="2020-08-12-cmi-seminar-eboard-notes.pdf"
+                >Revised e-board notes</a
+              >.
+              <br />
+              Online due to COVID-19, recorded on
+              <a href="https://www.youtube.com/watch?v=nHwtuqqtnKg">YouTube</a>.
+              (<b>Caution:</b> the talk is not to be taken unfailingly
+              literally, I often employ imprecise analogy and vague expressions
+              to convey ideas. I might also make mindless mistakes, which I’ll
+              be happy to hear about.)
+            </p>
+            <p>
+              <b>Abstract.</b><br />
+              Moduli spaces of simple (or somewhere injective in the closed
+              setting) pseudoholomorphic curves arise as smooth manifolds. In
+              this talk, we present some ideas for the multiply covered case.
+              That is the question of equivariant transversality – do generic
+              equivariant sections of an orbi-bundle intersect the zero section
+              transversally? In particular, we outline results like unbranched
+              multiple covers of closed curves are generically regular and
+              simple index 0 curves in dimension greater than four are
+              generically super-rigid. We also indicate some partial results for
+              regularity of branched covers, using a stratification argument for
+              spaces of multiple covers, framed in terms of a
+              representation-theoretic splitting of Cauchy Riemann operators
+              with symmetries.<br />
+              This talk is based on
+              <a href="https://www.mathematik.hu-berlin.de/~wendl/">Wendl</a>’s
+              paper “Transversality and super-rigidity for multiply covered
+              holomorphic curves” (<a href="https://arxiv.org/abs/1609.09867"
+                >arXiv:1609.09867</a
+              >).
+            </p>
+          </div>
+        </div>
+        <div>
+          <h2>Relevant background on pseudoholomorphic curves</h2>
+          <div>
+            <p>
+              We first present some background on pseudoholomorphic curves
+              (details can be found in [Wen2] or [MS]) needed in the following
+              discussion. For \((\Sigma, j)\) a closed Riemann surface and
+              \((M,J)\) an almost complex manifold, a \(J\) -holomorphic or
+              pseudoholomorphic (or often just <i>holomorphic</i>) curve \(u :
+              (\Sigma, j) \to (M,J)\) is a smooth map satisfying \(\d u \circ j
+              = J \circ \d u\). Such curves behave analogous to holomorphic
+              curves in complex analysis, and have been widely studied ever
+              since Gromov used them in 1985 to prove rigidity phenomena in
+              symplectic topology (the most notable example being the
+              <i>non-squeezing theorem</i>).
+            </p>
+            <p>
+              It is useful to take a global perspective and study the entire
+              space of holomorphic curves in a manifold. Such a viewpoint is
+              useful in topology since we are often only concerned with maps
+              upto perturbations and the study of entire families often gives us
+              information about the curves in that family. In this respect, let
+              \(\mathcal{B} = \cinf(\Sigma, M)\) be the space of smooth maps
+              from \(\Sigma\) to \(M\) and for a map \(u \in \mathcal{B}\),
+              consider the space of \(u^*TM\) valued \((0,1)\) forms
+              \(\mathcal{E}_u = \Omega^{0,1}(\Sigma, u^* TM)\). These vector
+              spaces together form an “infinite-dimensional vector bundle”
+              \(\mathcal{E} \to \mathcal{B}\). Using the definition of
+              holomorphic curves, we arrive at a particular section
+              \(\delbar_J(u) = 1/2 (\d u + J \circ \d u \circ j)\) of the bundle
+              \(\mathcal{E} \to \mathcal{B}\). Under this formulation,
+              holomorphic curves are precisely the zero set of this section,
+              i.e., solutions to \(\delbar_J(u) = 0\) (this is the
+              <i>nonlinear Cauchy-Riemann equation</i>).
+            </p>
+            <p>
+              It turns out that under suitable hypotheses, the space of such
+              curves is indeed a smooth manifold. In finite dimensional
+              differential geometry, we have that level sets of regular values
+              for a smooth map between manifolds is a regular submanifold of the
+              domain. Trying to imitate that in the global perspective described
+              earlier, we find that \(0\) is in some sense a regular value for
+              the \(\delbar_J\) operator (more formally, \(\delbar_J\) is a
+              Fredholm section with respect to suitable Sobolev completions of
+              \(\mathcal{E}\) and \(\mathcal{B}\)).
+            </p>
+            <p>
+              To outline the hypotheses, we introduce the notion of
+              <i>simple curves</i>. Recall from complex analysis, that any
+              holomorphic map between closed Riemann surfaces is either a
+              biholomorphism or a cover of some kind. Similarly, a JH curve \(u
+              : \Sigma \to M\) is <i>multiply covered</i> if there is a compact
+              RS \((\Sigma', j')\), a JH curve \(v : \Sigma' \to M\) and a
+              holomorphic branched covering \(\varphi : \Sigma \to \Sigma'\)
+              such that \(u = v \circ \varphi\). The curve is <i>simple</i> if
+              its not mulitply covered, the analogue of biholomorphisms from
+              complex analysis. In the closed setting, these curves are the same
+              as <i>somewhere injective curves</i> (curves \(u\) which are
+              injective somewhere, that is, \(\exists z\) such that \(\d u(z)
+              \ne 0\) and \(u^{-1}(u(z)) = \{z\}\)). It turns out that
+              <i>any</i> holomorphic curve can be shown to factor through a
+              simple curve.
+            </p>
+            <p>
+              Now, let \((M,\w)\) be a symplectic manifold. Then for a
+              <i>generic</i> \(\w\) compatible almost complex structure \(J\)
+              (that is to say, for \(J\) in a comeager subset of the space of
+              all \(\w\) compatible acs), the space of simple JH curves
+              representing a particular homology \(A \in H_2(M)\) is a smooth
+              manifold of dimension given by an index formula (namely, the
+              Riemann Roch fomula).
+            </p>
+            <p>
+              Now that we are done with the story of simple curves, a natural
+              question which arises is what happens for multiple covers? Can we
+              make similar statements about the space of multiple covers of a
+              particular type?
+            </p>
+          </div>
+        </div>
+        <div>
+          <h2>The case of multiple covers</h2>
+          <div>
+            <p>
+              We begin with a discussion of unbranched covers. If \(u : (\Sigma,
+              j) \to (M,J)\) is a closed JH curve and \(\varphi :
+              (\Tilde{\Sigma}, \Tilde{j}) \to (\Sigma, j)\) is an
+              <i>unbranched</i> \(d:1\) cover of closed surfaces, then the
+              virtual dimensions of the moduli spaces containing \(u\) and \(u
+              \circ \varphi : (\Tilde{\Sigma}, \Tilde{j}) \to (M,J)\), also
+              known as the <i>indices</i> of these two curves (<font color="red"
+                >Achtung!</font
+              >
+              The latter index would be the “expected” dimension of the space of
+              <b>all</b> curves (simple or not) close to \(u \circ \varphi\),
+              <b>not</b> only the \(d\) fold covers, as mentioned in the talk.
+              Thanks to Ramadas for the question!), are related by \[ \ind(u
+              \circ \varphi) = d \cdot \ind(u) \ge 0. \] Since \(\ind(u \circ
+              \varphi) \ge 0\) if \(u\) were simple (and \(J\) regular, etc),
+              there is no obvious reason why \(u \circ \varphi\) could not
+              achieve transversality generically, but traditional methods in the
+              theory for simple curves doesn’t generalize to this situation (the
+              proof for simple curves uses the existence of an injective point
+              to prove surjectivity of an operator). For branched covers, things
+              are more subtle.
+            </p>
+            <p>
+              One of the ways to study the problem of multiple covers is to
+              study the automorphism group of the cover itself. This leads us to
+              the question of how symmetry interacts with transversality in
+              general. We begin with an example in the finite dimensions.
+            </p>
+            <p>
+              Consider a smooth map \(f : \Z^2 \to \Z^2\) which is \(\Z_2\)
+              equivariant in the sense \(f(x,-y) = -f(x,y)\). One can show that
+              for every such map, there are <b>no</b> close
+              <i>\(\Z_2\) equivariant</i> perturbations for which \(\vec{0}\) is
+              a regular value (<font color="red">Achtung!</font> Contrary to
+              what was said in the talk, the method to prove that generic
+              functions on a smooth manifold are Morse, <b>fails to work</b> in
+              this case). This happens because the entire \(x\) axis \(\R \x
+              \{0\} \In f^{-1}(0) \forall\) such \(f\), so \(\del_x f =
+              \vec{0}\) along the \(x\) axis. As a result we donot have
+              transversality in this case.
+            </p>
+            <p>
+              The best case scenario is that generic \(f\) intersect zero
+              <i>cleanly</i>, i.e., all components of \(f^{-1}(0)\) are
+              submanifolds with \[ T_x(f^{-1}(0)) = \ker{\d f(x)}. \]
+            </p>
+
+            <p>
+              The notion of clean intersection is the only other thing one could
+              come up with for an intersection set to be a manifold other than
+              transversality. Two submanifolds \(M, N \In X\) are said to
+              intersect <i>cleanly</i> if \(T_x(M \cap N) = T_x M \cap T_x N\),
+              in such a case, we again have that \(M \cap N\) is a smooth
+              submanifold of both \(M\) and \(N\). The moral is that we cannot
+              always have transversality and symmetry at the same time.
+            </p>
+            <p>
+              Because we took the global perspective of the space of holomorphic
+              functions being the zero set of the \(\delbar_J\) section, a lot
+              of the theory of JH curves is really about understanding bundles
+              and sections of those bundles, when they intersect the zero
+              section transversally or cleanly, etc. Let’s set up this language
+              first in finite dimensions.
+            </p>
+          </div>
+          <div>
+            <h3>Equivariant transversality in finite dimensions</h3>
+            <div>
+              <p>
+                Fix an \(n\) dimensional orbifold \(M\) and an orbibundle \(E
+                \to M\) of rank \(m\). Every \(x \in M\) has a finite group
+                \(G_x\) and a neighborhood \(U_x \In M\) such that \[ E|_{U_x}
+                \isom (\mathcal{O} \x \R^m)/G_x \]
+              </p>
+
+              <p>
+                for some linear action of \(G_x\) on \(\R^m\) and a neighborhood
+                \(\mathcal{O} \In \R^n\) of \(0\).
+              </p>
+              <p>
+                The question to ask is if generic \(\sigma \in \Gamma(E)\)
+                intersect the zero-section transversely (or at least cleanly).
+                There are some theorems answering this question in some
+                contexts:
+              </p>
+              <ul>
+                <li>
+                  Sample theorem 1: If \(\dim{M} = \rk{E}\) and \(|G_x| \le 3\)
+                  for all \(x\), then generic sections of \(E\) intersect zero
+                  cleanly.
+                </li>
+                <li>
+                  Sample theorem 2: Generic smooth functions on an orbifold are
+                  Morse. (cf. Wasserman ’69, Hepworth ’09).
+                </li>
+              </ul>
+              <p>
+                The perspective we shall take towards considering equivariant
+                sections (i.e., sections of the orbibundle) is to break up our
+                manifold into parts where the local isotropy groups
+                <i>act in the same way</i>. This is the notion of
+                stratification.
+              </p>
+              <p>
+                <b>Ingredient A:</b> <i>Stratification via symmetry</i><br />
+                For any finite group \(G\) and representations \(\rho : G \to
+                GL(n,\R)\), \(\tau : G \to GL(m,\R)\), define the
+                <i>submanifold</i> \[ M_{\rho, \tau} = \{x \in M \st G_x \isom
+                G, \text{ acting on} \\ T_x M \text{ as } \rho \text{ and on } E_x
+                \text{ as } \tau\} \]
+              </p>
+
+              <p>
+                and <i>subbundle</i> \[ E_{\rho, \tau} = \{v \in E|_{M_{\rho,
+                \tau}} \st $G$ \text{ acts trivially on } $v$\}. \] Let
+                \(\{\theta_i : G \to \Aut_{\R}(W_i)\}_{i=1}^N\) denote the real
+                irreducible representations of \(G\), with \(\theta_1\) as the
+                trivial representation, and let \(m_i(\rho) :=\) multiplicity of
+                \(\theta_i\) in \(\rho\). Then \[ \dim(M_{\rho, \tau}) =
+                m_1(\rho), \qquad \rk{E_{\rho, \tau}} = m_1(\tau). \] The
+                orbifold \(M\) is thus a countable union of disjoint smooth
+                submanifolds \(M_{\rho, \tau}\) with distinguished subbundles
+                \(E_{\rho, \tau} \In E|_{M_{\rho, \tau}}\).
+              </p>
+              <p>
+                <b>Notice:</b> For all \(\sigma \in \Gamma(E),
+                \sigma(M_{\rho,\tau}) \In E_{\rho, \tau}\), \[ \implies \sigma
+                \not\pitchfork 0 \text{ at } x \in M_{\rho,\tau} \text{ unless }
+                \tau \text{ is trivial}. \]
+              </p>
+              <p>
+                We now have:<br />
+                <b>Lemma (standard transversality arguments)</b>. For
+                <i>generic</i> \(\sigma \in \Gamma(E)\), \(\sigma|_{M_{\rho,
+                \tau}}\) is <i>transverse to the zero section</i> of
+                \(E_{\rho,\tau} \to M_{\rho,\tau}\) for every \(G, \rho, \tau\).
+              </p>
+              <p>
+                So we have partial transversality in the above sense. We still
+                however, cannot conclude from this that \(\mathcal{M}(\sigma)\)
+                is anything as nice as a smooth orbifold. Under certain
+                circumstances, we can still push this to say that the space is
+                “nice enough”.
+              </p>
+              <p>
+                <b>Ingredient B:</b> <i>Splitting the linearization</i><br />
+                At \(x \in \mathcal{M}_{\rho, \tau}(\sigma)\), there is a
+                linearization \[ D_x := D\sigma(x) : T_x M \to E_x. \] Recall
+                the irreps \(\{\theta_i : G_x \to \Aut_{\R}(W_i)\}_{i=1}^N\),
+                and denote \(d_i := \dim{W_i}\).
+              </p>
+              <p>
+                Since \(D_x\) is \(G_x\) equivariant, Schur’s lemma implies that
+                it splits with respect to the isotypic decompositions \(T_x M =
+                \oplus_{i=1}^N T_x M^i\) of \(\rho\) and \(E_x = \oplus_{i=1}^N
+                E_x^i\) of \(\tau\), giving \[ D_x = D_x^1 \oplus \dots \oplus
+                D_x^N, \quad \text{where} \quad D_x^i : T_x M^i \to E_x^i. \]
+                These operators have Fredholm indices \[ \ind{D_x^i} =
+                d_i[m_i(\rho) - m_i(\tau)], \] and we know \(D_x^1\) is
+                surjective if \(\sigma\) is generic.
+              </p>
+              <p>
+                And finally we have the last ingredient:<br />
+                <b>Ingredient C:</b>
+                <i>Building walls (in the sense of “crossing”)</i><br />
+                \(G_x\) acts on \(\ker{D_x^i}\) and \(\coker{D_x^i}\) as the
+                irrep \(\theta_i\) with some multiplicities, so their dimensions
+                are divisible by \(d_i\).
+              </p>
+              <p>
+                For non-negative integers \(\mathbf{k} = (k_1, \dots, k_N)\) and
+                \(\mathbf{c} = (c_1, \dots, c_N)\), let \[ \mathcal{M}_{\rho,
+                \tau}(\sigma; \mathbf{k}, \mathbf{c}) = \{x \in
+                \mathcal{M}_{\rho,\tau}(\sigma) \st \dim{\ker{D_x^i}} = d_i k_i,
+                \dim{\coker{D_x^i}} = d_i c_i \forall i\}. \] Then we have<br />
+                <b>Workhorse theorem.</b> For generic \(\sigma \in \Gamma(E)\),
+                for all choices \(G, \rho, \tau, \mathbf{k}, \mathbf{c}\), \[
+                \mathcal{M}_{\rho, \tau}(\sigma; \mathbf{k}, \mathbf{c}) \In
+                \mathcal{M}_{\rho,\tau}(\sigma) \] is a smooth submanifold with
+                codimension \(\sum_{i=1}^N t_i k_i c_i\), where \(t_i :=
+                \dim_{\R}\End_{G}(W_i) \in \{1,2,4\}\).
+              </p>
+              <p>
+                A sketch of the proof of this workhorse theorem can be found in
+                [Wen3].
+              </p>
+              <p>
+                Note that the above is an abstract theory. Considering multiply
+                covered JH maps amounts to considering equivariance of
+                \(\delbar_J\) section of \(\mathcal{E} \to \mathcal{B}\) under
+                the action of the Deck groups of multiple covers. The problem of
+                equivariant transversality arises as perturbing \(J\) perturbs
+                \(\delbar_J\) equivariantly.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>The main results and stratification theory</h2>
+          <div>
+            <p>
+              <b>Theorem B (transversality, unbranched).</b> “For generic \(J\),
+              for all simple JH curves \(u : (\Sigma,j) \to (M,J)\) and every
+              unbranched cover \(\varphi : (\Tilde{\Sigma}, \Tilde{j}) \to
+              (\Sigma, j)\) of closed RS, the curve \(u \circ \varphi\) is
+              Fredholm regular”.<br />
+              <font color="red">Achtung!</font> Note that Fredholm regularity of
+              \(u \circ \varphi\) means that \(u \circ \varphi\) lies in a
+              smooth manifold, which is the moduli space of <b>all</b> (simple
+              or not) curves, <b>not only</b> of covers. What was said in the
+              talk is correct, but unrelated (in a different ambient space).
+            </p>
+            <p>
+              In the general branched case, it is harder to achieve
+              transversality as mentioned earlier. Let us consider \(u \circ
+              \varphi\), where \(u\) is a closed simple curve and \(\varphi\) is
+              a degree \(d\) branched cover. Let \(Z(\d \varphi)\) denote the
+              algebraic count of branch points. Then, the Riemann Hurwitz
+              formula \[ -\chi(\Tilde{\Sigma}) + d \chi(\Tilde{\Sigma}) = Z(\d
+              \varphi) \] and the standard index formula for closed curves, give
+              us \[ \ind(u \circ \varphi) = d \cdot \ind(u) -(n-3) Z(\d \varphi)
+              \] where \(\dim_{\R}(M) = 2n\). If \(\ind(u) = 0\) and \(n &gt;
+              3\), then \(\ind(u \circ \varphi) &lt; 0\). So, there is no reason
+              to expect transversality in this case. More seriously, if \(u\) is
+              regular, then one can always find a smooth family of other
+              multiple covers near \(u \circ \varphi\) obtained by varying both
+              \(u\) and \(\varphi\) in their respective moduli spaces; since the
+              latter lives in a space of real dimension \(2Z(\d \varphi)\), the
+              condition \[ \ind(u \circ \varphi) \ge \ind(u) + 2Z(\d \varphi) \]
+              is evidently necessary in order for \(u \circ \varphi\) to be
+              Fredholm regular. One of the ways to achieve this is if
+              \(\varphi\) has \(r \ge 0\) critical values, then the above
+              condition is satisfied whenever \(\ind(u) \ge (n-1)r\) (refer
+              [Wen1] pg 6 for a calculation). The following result says that
+              this is also, in some sense, sufficient to achieve transversality.
+            </p>
+            <p>
+              <b>Theorem C (transversality, branched).</b> “For generic \(J\),
+              branched covers satisfying the above condition can be \(\cinf\)
+              approximated by Fredholm regular branched covers.” (Refer [Wen1]
+              for the precise statement.)
+            </p>
+          </div>
+          <div>
+            <h3>Super-rigidity for index 0 immersed curves</h3>
+            <div>
+              <p>
+                Note that \(\ind(u) = \ind(D_u)\) that is, the index of the
+                linearized CR operator. Observe that \(u\) must be immersed if
+                \(J\) is generic, so it has a well-defined normal bundle \(N_u
+                \to \Sigma\), and restricting the linearized CR operators for
+                \(u\) and \(u \circ \varphi\) to the normal bundle and its
+                pullback gives operators \(D^N_u := D_u|_{N_u}\) and \(D^N_{u
+                \circ \varphi}\). Consider these normal operators, we have a new
+                index relation similar to the one earlier, namely \[ \ind(D^N_{u
+                \circ \varphi}) = d \cdot \ind(D^N_u) - (n-1)Z(\d \varphi). \]
+                Note that for immersed curves, Fredholm regularity can also be
+                characterized by surjectivity of the normal CR operator (see
+                Prop. 2.2 of [Wen1]). If \(\ind(u) = 0\), then the latter is
+                always nonpositive, so \(D^N_{u \circ \varphi}\) can be
+                injective, and this condition has a geometric meaning (remember
+                that sections of \(N_u\) can be considered as peturbations one
+                can make to \(u\); alternatively, curves nearby \(u\) are
+                perturbed by the sections of \(N_u\) via the exponential map):
+                it implies that \(u \circ \varphi\) can never be the limit of a
+                sequence of somewhere injective curves. In fact, the only other
+                curves near \(u \circ \varphi\) are other branched covers of the
+                form \(u \circ \varphi'\) for \(\varphi'\) near \(\varphi\).
+                This is the notion of super-rigidity. We now state the theorem:
+              </p>
+              <p>
+                <b>Theorem A (super-rigidity).</b> If \(\dim{M} \ge 6\), for
+                generic \(J\), every simple index 0 JH curve is super-rigid.
+                (i.e., a closed, connected simple curve, which satisfies the
+                properties:
+              </p>
+              <ul>
+                <li>\(\ind(u) = 0\).</li>
+                <li>\(u : \Sigma \to M\) immersion.</li>
+                <li>
+                  \(\forall\) covers \(\Tilde{u} = u \circ \varphi\),
+                  \(D^N_{\Tilde{u}} \eta\) is injective.)
+                </li>
+              </ul>
+              <p>
+                Considerable interest in super-rigidity has been motivated by
+                the study of Gromov-Witten invariants in Calabi-Yau 3-folds,
+                where all moduli spaces of holomorphic curves have virtual
+                dimension 0. If \((M,J)\) denotes a CY 3-fold (i.e., \(c_1(TM) =
+                0\) and \(\dim{M} = 6\)) and \(\mathcal{M}_g(A,J)\) is the
+                moduli space of unparametrized JH curves in \(M\) of genus \(g\)
+                homologous to \(A \in H_2(M)\), then we have
+                \(\virdim{\mathcal{M}_g(A,J)} = \ind(D(\delbar_J)) = 0\). We see
+                trouble however once we consider mulitply covered curves. If \(v
+                \in \mathcal{M}_h(A,J)\) and \(d \ge 2\), then \[
+                \mathcal{M}_g(dA, J) \supset \{u = v \circ \varphi \st \varphi :
+                \Sigma_g \to \Sigma_h \text{ a holomorphic branched cover}\} \]
+                has dimension \(2 Z(\d \varphi) &gt; 0\) in general. But this
+                contradicts transversality in the space of
+                <i>all</i> (<i>not only</i> simple) curves as
+                \(\ind(D(\delbar_J)) = 0\). This must mean \(\delbar_J
+                \not\pitchfork 0\) for the full space of curves. This motivates
+                the question if the intersection is atleast clean.
+              </p>
+              <p>
+                <b>Conjecture</b> (“super-rigidity”, Bryan-Pandharipande 2001).
+                For generic compatible \(J\) in a symplectic CY 3-fold,
+                \(\delbar_J\) intersects \(0\) <i>cleanly</i>.
+              </p>
+              <p>
+                Note that clean intersection of \(\delbar_J\) with \(0\) is
+                equivalent to the definition of super-rigidity given above, in
+                particular, the condition that \(D^N_{u \circ \varphi}\) is
+                injective for all covers \(u \circ \varphi\) of \(u\).
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3>The stratification theorem</h3>
+            <div>
+              <p>
+                The proofs of the above theorems use stratification (Theorem D).
+                The idea is to study the local structure of spaces of the form
+                \[ \mathcal{M}(k,c) := \{\Tilde{u} = u \circ \varphi \st
+                \dim{\ker{D^N_{\Tilde{u}}}} = k \text{ and }
+                \dim{\coker{D^N_{\Tilde{u}}}} = c\}, \] where \(k,c \ge 0\) are
+                fixed integers, \(u\) varies in the moduli space of simple JH
+                holomorphic curves and \(\varphi\) varies in the moduli space of
+                holomorphic branched covers. Ideally, one would like to show
+                that that these spaces are smooth manifolds for generic \(J\),
+                and to compute their codimensions in the space of pairs
+                \((u,\varphi)\). This turns Theorems A and B into “dimension
+                counting” problems, as whenever one can show that the
+                codimension of \(\mathcal{M}(k,c)\) is larger than the dimension
+                of the ambient space for suitable values of \(k\) and \(c\), one
+                may conclude that either \(\ker{D^N_{\Tilde{u}}}\) or
+                \(\coker{D^N_{\Tilde{u}}}\) must be trivial. For a further
+                discussion of wall-crossing arguments, refer [Wen1]. Note that
+                this is a bootstrapping of the ideas of finite dimensional
+                equivariant transversality mentioned earlier on top of
+                equivariance of \(\delbar_J\) for multiple pseudoholomorphic
+                covers. We now state the stratification result:
+              </p>
+              <p>
+                <b>Theorem D (stratification).</b> “For generic \(J\), and for
+                all choices of finite group \(G\), branching data
+                \(\mathbf{b}\), \(g,m \ge 0\), \(l_1, \dots, l_m \ge 1\),
+                homology class \(A \in H_2(M)\) and tuples \(\mathbf{k} = (k_1,
+                \dots, k_p)\) and \(\mathbf{c} = (c_1, \dots, c_p)\) of
+                nonnegative integers corresponding to the \(p\) distinct
+                irreducible real representations of \(G\), the subset \[
+                \mathcal{M}^d_{\mathbf{b},G}(\mathcal{M}_{g,m}(A,J; l_1, \dots,
+                l_m); \mathbf{k}, \mathbf{c}) \In \mathcal{M}^d_{\mathbf{b},
+                G}(\mathcal{M}_{g,m}(A,J; l_1, \dots, l_m)) \] is a smooth
+                submanifold of codimension \(\sum t_i k_i c_i\), where \(t_i :=
+                \dim_{\R}\mathbf{K}_i \in \{1,2,4\}\) depending on the type of
+                the irreducible representations.”
+              </p>
+              <p>The details on stratification can be found in [Wen1].</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>References</h2>
+          <div>
+            <ul>
+              <li>
+                <b>[Wen1]:</b>
+                <i
+                  >Transversality and super-rigidity for multiply covered
+                  holomorphic curves</i
+                >, Chris Wendl,
+                <a href="https://arxiv.org/abs/1609.09867">arXiv:1609.09867</a>.
+              </li>
+              <li>
+                <b>[Wen2]:</b>
+                <i
+                  >Lectures on Holomorphic Curves in Symplectic and Contact
+                  Geometry</i
+                >, Chris Wendl,
+                <a
+                  href="https://www.mathematik.hu-berlin.de/~wendl/pub/jhol_bookv33.pdf"
+                >
+                  available</a
+                >
+                on
+                <a
+                  href="https://www.mathematik.hu-berlin.de/~wendl/publications.html#notes"
+                >
+                  his website</a
+                >.
+              </li>
+              <li>
+                <b>[Wen3]:</b> Slides of a 2018 talk “Symmetry and
+                Transversality” by Chris Wendl at Amsterdam,
+                <a
+                  href="https://www.mathematik.hu-berlin.de/~wendl/Amsterdam.pdf"
+                >
+                  available</a
+                >
+                on
+                <a
+                  href="https://www.mathematik.hu-berlin.de/~wendl/publications.html#talks"
+                >
+                  his website</a
+                >.
+              </li>
+              <li>
+                <b>[MS]:</b>
+                <i>J-holomorphic Curves and Symplectic Topology</i>, Dusa McDuff
+                & Dietmar Salamon (2012,
+                <a href="https://bookstore.ams.org/coll-52-r/"
+                  >AMS Colloquium Publications</a
+                >).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </ma>
+  </body>
+  <script src="/assets/katex/katex.min.js"></script>
+  <script src="/assets/katex/custom.js"></script>
+</html>
