@@ -1,0 +1,14 @@
+<aside>
+    <img src="/assets/paramjit-portrait.webp" alt="Paramjit&amp;rsquo;s portrait in front of a Ferris Wheel">
+    <nav class="nav social">
+        <ul class="flat">
+            {{- range $index, $key := .Site.Params.Social -}}
+            <a href="{{ $key.url }}"
+                title="{{ $key.name }}"><i data-feather="{{ $key.icon }}"></i></a>
+            {{- end -}}
+        </ul>
+    </nav>
+    <p>I am a software engineer in Berlin, interested in creating intelligent
+    software which delivers delightful experiences to users. Read more about <a
+    href="/about">me</a> or my <a href="/code">dev services</a>.</p>
+</aside>

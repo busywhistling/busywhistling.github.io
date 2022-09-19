@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+{{ partial "head.html" . }}
+<body>
+	<main id="about">
+		{{ partial "header.html" . }}
+    <img src="/assets/paramjit-portrait.webp" alt="Paramjit&amp;rsquo;s portrait in front of a Ferris Wheel">
+
+		<div class="post-header">
+			<h1 class="title">{{ .Title }}</h1>
+			<div class="meta">{{ if isset .Params .Date }}{{ dateFormat "Jan 2, 2006" .Date }}{{ end }}
+				{{ if .Draft }} <span class="draft-label">DRAFT</span> {{ end }}</div>
+		</div>
+
+		<div class="markdown">
+
+			{{ .Content }}
+		</div>
+
+	</main>
+	{{ partial "footer.html" . }}
+</body>
+</html>
