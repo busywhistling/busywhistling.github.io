@@ -26,9 +26,9 @@ system where only the updated UI pieces (only things to be done) are re-rendered
 (get done) is easy, implementing it in reality is hard (browser DOM operations
 are expensive & not designed for it). React tackles this by using a
 reconciliation algorithm on a virtual DOM (a JS object representing the DOM
-tree) to handle this <em>reactively</em>.</p></li></ul><h1 id=chess-transcriber><strong>Chess transcriber</strong></h1><p>Here I want to talk about how I implemented a <a href=https://paramjit.org/chess_simulator/>chess
+tree) to handle this <em>reactively</em>.</p></li></ul><h1 id=chess-transcriber><strong>Chess transcriber</strong></h1><p>Here I want to talk about how I implemented a <a href=https://paramjit.org/chess_transcriber/>chess
 transcriber</a> using React
-(<a href=https://github.com/busywhistling/chess_simulator>source</a>).</p><ul><li><p>Designing component architecture. The UI has a decent level of complex logic
+(<a href=https://github.com/busywhistling/chess_transcriber>source</a>).</p><ul><li><p>Designing component architecture. The UI has a decent level of complex logic
 to it. At first, I divided the app in a Left Sidebar, main Chessboard and the
 Right Sidebar. The Left Sidebar should state instructions on how to use the app
 & let you choose functionality, the Right Sidebar should give
@@ -72,5 +72,5 @@ rearranged in a way that encourage component composition with
 appropriate <em>local</em> state initialization / usage.</p></li></ul><p>This app has been pretty useful to appreciate the underlying design choices of
 React and to understand when exactly to use (or not) Store libraries. Clean code
 comes from clean architecture, which requires having a clear idea of
-what <em>exactly</em> various tools offer, and when they make sense to use. Try out <a href=https://paramjit.org/chess_simulator/>the
+what <em>exactly</em> various tools offer, and when they make sense to use. Try out <a href=https://paramjit.org/chess_transcriber/>the
 app</a>, and let me know your thoughts!</p><small>This article was cross-posted to <a href=https://medium.com/@busywhistling/implementing-a-chess-transcriber-in-react-937f1cc8ba75>Medium</a> & <a href=https://dev.to/busywhistling/implementing-a-chess-transcriber-in-react-2ahi>Dev.to</a>, so you can also follow there or post comments.</small></div><div class=post-tags></div></div><div class="footer wrapper"><nav class=nav><div>Modified <a href=https://github.com/vividvilla/ezhil>Ezhil theme</a> | Built with <a href=https://gohugo.io>Hugo</a></div></nav></div><script>feather.replace()</script></body></html>
