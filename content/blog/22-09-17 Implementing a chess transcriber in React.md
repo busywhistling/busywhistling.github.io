@@ -41,8 +41,8 @@ tree) to handle this *reactively*.
 # **Chess transcriber**
 
 Here I want to talk about how I implemented a [chess
-transcriber](https://paramjit.org/chess_simulator/) using React
-([source](https://github.com/busywhistling/chess_simulator)).
+transcriber](https://paramjit.org/chess_transcriber/) using React
+([source](https://github.com/busywhistling/chess_transcriber)).
 
 - Designing component architecture. The UI has a decent level of complex logic
 to it. At first, I divided the app in a Left Sidebar, main Chessboard and the
@@ -107,4 +107,4 @@ This app has been pretty useful to appreciate the underlying design choices of
 React and to understand when exactly to use (or not) Store libraries. Clean code
 comes from clean architecture, which requires having a clear idea of
 what *exactly* various tools offer, and when they make sense to use. Try out [the
-app](https://paramjit.org/chess_simulator/), and let me know your thoughts!
+app](https://paramjit.org/chess_transcriber/), and let me know your thoughts!

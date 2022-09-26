@@ -19,6 +19,6 @@ choices and performant software.
 
 Portfolio (more in the works on the [github page](https://github.com/busywhistling))
 
-- [Chess simulator](https://paramjit.org/chess_simulator/)
+- [Chess transcriber](https://paramjit.org/chess_transcriber/)
 - [Live web chat](https://github.com/busywhistling/live_chat)
 - [Letters to Cities](https://github.com/busywhistling/letters_to_cities)
