@@ -1,0 +1,97 @@
+<!doctype html><html><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><title>Implementing serverless chat in React - Paramjit Singh</title><link rel=icon type=image/png href=icons/myicon.png><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:title" content="Implementing serverless chat in React"><meta property="og:description" content="Writing a live chat application using React while leveraging serverless infrastructure on Cloudflare's Edge network. This really exhibits the capability of JS workers / modules for small use cases where minimal database access is required."><meta property="og:type" content="article"><meta property="og:url" content="https://paramjit.org/blog/22-10-04-implementing-serverless-chat-in-react/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-10-04T00:00:00+00:00"><meta property="article:modified_time" content="2022-10-04T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Implementing serverless chat in React"><meta name=twitter:description content="Writing a live chat application using React while leveraging serverless infrastructure on Cloudflare's Edge network. This really exhibits the capability of JS workers / modules for small use cases where minimal database access is required."><link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel=stylesheet><link rel=stylesheet href=https://paramjit.org/main.5e90e5660f025d1bf0df22595a387d533a3e1b8ddd9f4b8a8cc5f4fcd4e4c9fc.css integrity="sha256-XpDlZg8CXRvw3yJZWjh9Uzo+G43dn0uKjMX0/NTkyfw="><link rel=stylesheet type=text/css media=screen href=https://paramjit.org/css/main.css><link rel=stylesheet type=text/css href=https://paramjit.org/css/custom.css><link rel=stylesheet type=text/css href=https://paramjit.org/css/dark.css media="(prefers-color-scheme: dark)"><link rel=stylesheet type=text/css href=https://paramjit.org/css/custom-dark.css media="(prefers-color-scheme: dark)"><script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<script src=https://paramjit.org/js/main.js></script>
+<script src=https://paramjit.org/js/abc.js></script>
+<script src=https://paramjit.org/js/xyz.js></script>
+<script src=https://code.jquery.com/jquery-3.4.1.js></script>
+<script defer data-domain=paramjit.org src=https://plausible.paramjit.org/js/pls.js></script></head><body><div class="container wrapper post"><header><div class=site-title><h1><a href=https://paramjit.org/>Paramjit Singh</a></h1><nav class="nav social"><ul class=flat><a href=https://github.com/busywhistling title=GitHub><i data-feather=github></i></a><a href=https://twitter.com/busywhistling title=Twitter><i data-feather=twitter></i></a><a href=https://www.linkedin.com/in/paramjit-org/ title=LinkedIn><i data-feather=linkedin></i></a><a href=mailto:contact@paramjit.org title=Email><i data-feather=mail></i></a><a href=/index.xml title=RSS><i data-feather=rss></i></a></ul></nav></div><nav class=nav><ul class=flat><li><a href=/>Blog</a></li><li><a href=/code>Code</a></li><li><a href=/blog>Archive</a></li><li><a href=/about>About</a></li></ul></nav></header><div class=post-header><h1 class=title>Implementing serverless chat in React</h1><div class=meta></div></div><div class=markdown><p>When developing simple client-side React applications, one often needs a touch
+of backend services. Not an entire database (with its management &
+administration needs) or high performance compute. These services have their own
+use cases, but for simpler requirements, they often take more energy to set up
+than necessary. It&rsquo;s also difficult to scale these services up or down depending
+on usage, which might lead to unnecessary overhead (when you don&rsquo;t utilise them
+fully) or service interruptions (due to traffic spikes).</p><p>Enters the notion of serverless infrastructure &ndash; a paradigm of providing
+backend services to the front-end on a as-used basis. Serverless vendors charge
+usage, not bandwidth and hence solve two problems with one solution &ndash; that of
+boosting (cost) efficiency and scaling up on demand. This creates a refuge where
+application developers can write and deploy code without worrying about
+infrastructure needs. Like all refuges however, there are trade-offs in
+inhabiting this system. For the usecase detailed in this post, serverless
+computing suffices and I&rsquo;ll outline how I used Cloudflare&rsquo;s edge network as a
+serverless platform.</p><p>When I first started this project, I wanted to build a live chat application,
+one of the fundamental pieces of software in any social product. I made an
+<a href=https://github.com/busywhistling/live_chat>app</a> using the popular Javascript
+<a href=https://expressjs.com/>express</a> (server) and <a href=https://socket.io/>socket.io</a>
+(websocket) libraries which worked fine in local development. When it came to
+deploying it online, I didn&rsquo;t want to just deploy it openly (without
+authentication) as there might be bots crawling the internet, looking for open
+websocket servers to spam and so on. On the other hand, I didn&rsquo;t want to use my
+domain for authentication (and registration) services for this pet project. The
+idea of using serverless JS workers came to me as I was thinking about how to
+architect the application with the least possible backend exposure. Luckily,
+several cloud vendors provide such services nowadays so it&rsquo;s only a matter of
+time to integrate with their interfaces.</p><p><img src=./22-10-04-feature.png alt="My online live chat React app" title="My online live chat React app"></p><h1 id=cloudflare-workers>Cloudflare workers</h1><p>Cloudflare workers are JS modules / functions running on Cloudflare&rsquo;s global
+network in over 200 cities around the world. Cloudflare&rsquo;s reputation of
+providing DDOS protection services implies that they have spent time optimizing
+resilient cloud networks and CDN services, and they offer to front web traffic
+for other businesses. So in essence, a cloudflare worker is a reliable online JS
+function which is run on CF&rsquo;s network servers anytime you call the function.
+This is great for non-persistent (light) compute, but the workers platform also
+<a href=https://developers.cloudflare.com/workers/platform/storage-objects>includes</a>
+simplified key-value storage and consistent distributed storage via Durable
+Objects. Of interest to us is this last one, namely Durable Objects. We
+want to implement a chat application (with it&rsquo;s UI layer written in React) over
+a global distributed network.</p><p>Suppose there are five participants in different parts of the world, talking in
+a group chat. To provide real-time feedback, one needs low-latency coordination
+among the servers closest to these users and even more importantly, the messages
+in the group chat have to be in one order for all users (a fairly difficult
+problem). See how quickly the problem of enforcing consistency over distributed
+systems becomes demanding? Cloudflare&rsquo;s Durable Objects try to tackle this by
+implementing a locking mechanism to enforce Global Uniqueness and using a
+transactional single-threaded storage API while reading / modifying key-value
+pairs. This suffices for a wide variety of use-cases (certainly ours in this
+blog post), but you can also think of use-cases where you might need more local
+(& better) consistency resolution (like in one particular geographical region).</p><p>Our
+<a href=https://github.com/busywhistling/serverless_chat/blob/main/src/worker.js>worker</a>
+implements a <code>fetch</code> listener (wrapped in an error handler) and passes on API
+requests further, to instantiate a ChatRoom class. The instance of this class
+runs as a Durable Object and creates chatrooms while handling sessions to this
+chatroom. Since we don&rsquo;t want to persist data, we don&rsquo;t store it anywhere and
+all data is lost as soon as the websockets enabling the sessions are
+disconnected / closed. The ChatRoom Durable Object also instantiates a
+RateLimiter class to ensure worker compute is not abused by heavy traffic, but
+is rather moderated via rate limiting.</p><h1 id=passing-callback-functions-to-reacts-usestate>Passing callback functions to React&rsquo;s <code>useState</code></h1><p>One of the issues I came across while implementing the UI in React was to
+re-render the components upon receiving messages through the web socket. React
+components usually do not re-render until some state (which is being accessed in
+the component) is updated. This is, in general, a strength of React as it promotes performant rendering while defering expensive operations &ndash; namely, re-render <em>only</em> when necessary. So when sometimes there is no explicit need of state in a component, external triggers of rendering are carried out by dummy state, like in this instance, a dummy <code>msgCount</code> state number.</p><p>Another issue I faced was sometimes encountering incoherent state updates (and
+renders) in my App component. When using the <code>useState</code> hook, the setter
+function (some form of <code>setState</code>) is used to update local state and ask React
+to re-render the component (update the DOM). Usually, one often just calls
+<code>setState</code> with a new value passed in as an object, for e.g.,
+<code>setState(newState)</code>. What if our <code>newState</code> depends on the current <code>state</code>
+variable? Directly accessing <code>state</code> is <em>not</em> a reliable way to cause this
+update as React handles state updates asynchronously. This doesn&rsquo;t show easily
+in all applications (for instance, when some other state variable being updated
+pushes this state variable to also be updated and saves our application from
+breaking) or when the state update is a rather isolated low-cost operation
+(which somehow escaped React&rsquo;s batching of operations for the next render). To
+quote React&rsquo;s
+<a href=https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous>documentation</a>,
+&ldquo;Because <code>this.props</code> and <code>this.state</code> may be updated asynchronously, you should
+not rely on their values for calculating the next state.&rdquo; Now I usually don&rsquo;t
+face these failed &ldquo;renders&rdquo;, but in this app, frequent websocket messages (which
+often happen in fast succession) &ldquo;failed to re-render the UI&rdquo; and any further UI
+updates almost &ldquo;missed out&rdquo; the state updates before (for e.g., if you&rsquo;re
+appending a <code>messages</code> list with messages flowing from a websocket). At first, I
+tried to fix this by adding more dummy state variables (without success) and
+using <code>useEffect</code> and <code>useRef</code> hooks to force more re-renders, before finally
+realizing the main problem. What I wanted was not <em>more renders</em>, but more
+reliable <em>state updates</em>, as the excess renders also kept showing the old state,
+although sometimes incoherently. <em>It wasn&rsquo;t the renders that were failing, but the state updates.</em></p><p>The conclusion is to pass callback functions to <code>setState</code> hooks when one needs
+the current state or props to calculate the next state. React is then able to
+reliably queue up these &ldquo;pipes&rdquo; / transformations to apply to the current state,
+<em>without</em> relying on what the current state actually is. This is almost so
+important that there should be an ESLint plugin for this (and there is
+<a href=https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md>one</a>).</p><p>This app has been pretty useful to me to acknowledge the subtleties of React&rsquo;s
+<code>useState</code> hook (and rendering mechanism) and to understand how capable
+serverless infrastructure is. Try out <a href=https://paramjit.org/serverless_chat/>the
+app</a>, and let me know your thoughts!</p><small>This article was cross-posted to <a href=https://medium.com/@busywhistling/implementing-serverless-chat-in-react-8aaa92cfa780>Medium</a> & <a href=https://dev.to/busywhistling/implementing-serverless-chat-in-react-3md2>Dev.to</a>, so you can also follow there or post comments.</small></div><div class=post-tags></div></div><div class="footer wrapper"><nav class=nav><div>Modified <a href=https://github.com/vividvilla/ezhil>Ezhil theme</a> | Built with <a href=https://gohugo.io>Hugo</a></div></nav></div><script>feather.replace()</script></body></html>
