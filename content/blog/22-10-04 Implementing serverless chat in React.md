@@ -39,7 +39,7 @@ architect the application with the least possible backend exposure. Luckily,
 several cloud vendors provide such services nowadays so it's only a matter of
 time to integrate with their interfaces.
 
-![My online live chat React app](./22-10-04-feature.png "My online live chat React app")
+![My live chat React app](/img/22-10-04-feature.png "My live chat React app")
 
 # Cloudflare workers
 Cloudflare workers are JS modules / functions running on Cloudflare's global

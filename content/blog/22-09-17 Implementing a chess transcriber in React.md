@@ -70,9 +70,7 @@ like to use for complex component trees. I chose Redux to store where the pieces
 exist on the board & which are the highlighted tiles for a move, etc., and made
 the app work.
 
-![https://miro.medium.com/max/700/1*z4zTg1NIUHNFEtPLnOuD-w.png](https://miro.medium.com/max/700/1*z4zTg1NIUHNFEtPLnOuD-w.png)
-
-My chess transcriber web app
+![My chess transcriber React app](/img/22-09-17-feature.png "My chess transcriber React app")
 
 # **A second look & re-architecture**
 
