@@ -20,5 +20,6 @@ choices and performant software.
 Portfolio (more in the works on the [github page](https://github.com/busywhistling))
 
 - [Chess transcriber](https://paramjit.org/chess_transcriber/)
-- [Live web chat](https://github.com/busywhistling/live_chat)
+- [Serverless chat](https://paramjit.org/serverless_chat/)
+- [Live web chat](https://github.com/busywhistling/live_chat) (using express and socket.io libraries)
 - [Letters to Cities](https://github.com/busywhistling/letters_to_cities)
