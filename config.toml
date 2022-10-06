@@ -15,6 +15,9 @@ paginate = 10
 # Number of characters to show in summary.
 summaryLength = 20
 
+[markup.goldmark.renderer]
+unsafe= true
+
 [params]
     # Blog subtitle which appears below blog title. Supports markdown.
     # subtitle = "Subtitle"

@@ -15,6 +15,12 @@ body {
         font-family: "EBGaramond", Verdana, Tahoma;
     }
 
+    .speakerdeck-iframe {
+        height: auto !important;
+        width: 95% !important;
+        aspect-ratio: 16 / 9 !important;
+    }
+
     header {
         margin-bottom: 2rem;
         font-family: "EBGaramond", Verdana, Tahoma;
