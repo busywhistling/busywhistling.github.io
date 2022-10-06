@@ -91,7 +91,7 @@ you can have a UI mixing up all outputs of various components in a well-written
 React app).
 
 - State management. I realized that my app (much like a lot of apps out there)
-don’t really need to use Redux or even React’s Context API. This came [in
+doesn’t really need to use Redux or even React’s Context API. This came [in
 time](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367) when
 I realized that using Redux really makes sense when *you want the actions (state
 changes) themselves* (whether for bug reports, persistent storage or syncing UI
